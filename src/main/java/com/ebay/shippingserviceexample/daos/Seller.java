@@ -1,4 +1,4 @@
-package daos;
+package com.ebay.shippingserviceexample.daos;
 
 public class Seller {
     private boolean isSellerEnrolled;
@@ -12,4 +12,11 @@ public class Seller {
     }
 
     public static final Seller NULL = new Seller(false);
+
+    @Override
+    public String toString() {
+        return "Seller{" +
+                "isSellerEnrolled=" + isSellerEnrolled +
+                '}';
+    }
 }

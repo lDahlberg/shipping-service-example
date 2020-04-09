@@ -1,7 +1,10 @@
 package com.ebay.shippingserviceexample.repository;
 
-import daos.Seller;
+import com.ebay.shippingserviceexample.daos.Seller;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SellerRepository {
-    Seller get(String sellerName);
+@Repository
+public interface SellerRepository extends MongoRepository<Seller, String> {
+
 }

@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   mongodb:
     image: mongo:3.2.4
@@ -6,8 +6,11 @@ services:
     ports:
       - 27017:27017
     command: --smallfiles
-  app:
-    image: demo
+  shipping-service-example:
+    image: shipping-service-example:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     links:

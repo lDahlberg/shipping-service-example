@@ -1,9 +1,13 @@
 package com.ebay.shippingserviceexample.dtos.requests;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Objects;
 
 // Note that I opted not to use Lombok for these classes to remove some boilerplate
 public class ItemUpForEligibility {
+
+    @Id
     private String title;
     private String seller;
     private int category;
@@ -65,5 +69,15 @@ public class ItemUpForEligibility {
     @Override
     public int hashCode() {
         return Objects.hash(title, seller, category, price);
+    }
+
+    @Override
+    public String toString() {
+        return "ItemUpForEligibility{" +
+                "title='" + title + '\'' +
+                ", seller='" + seller + '\'' +
+                ", category=" + category +
+                ", price=" + price +
+                '}';
     }
 }

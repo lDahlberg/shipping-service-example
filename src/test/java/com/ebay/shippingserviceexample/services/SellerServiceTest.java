@@ -2,15 +2,14 @@ package com.ebay.shippingserviceexample.services;
 
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 import com.ebay.shippingserviceexample.repository.SellerRepository;
-import daos.Seller;
+import com.ebay.shippingserviceexample.daos.Seller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -32,7 +31,7 @@ class SellerServiceTest {
     void isEligibleReturnsTrueWhenSellerIsInProgram() {
         Seller seller = new Seller(true);
 
-        when(repository.get(SELLER_NAME)).thenReturn(seller);
+        when(repository.findById(SELLER_NAME)).thenReturn(Optional.of(seller));
 
         ItemUpForEligibility item = new ItemUpForEligibility(TITLE, SELLER_NAME,  CATEGORY, PRICE);
         boolean result = subject.isEligible(item);
@@ -42,11 +41,11 @@ class SellerServiceTest {
 
     @Test
     void isEligibleReturnsFaleWhenSellerIsNull() {
-        when(repository.get(SELLER_NAME)).thenReturn(null);
+        when(repository.findById(SELLER_NAME)).thenReturn(Optional.empty());
 
         ItemUpForEligibility item = new ItemUpForEligibility(TITLE, SELLER_NAME,  CATEGORY, PRICE);
         boolean result = subject.isEligible(item);
 
-        assertFalse(result, "Should return true when seller is in program");
+        assertFalse(result, "Should return false when seller does not exist");
     }
 }

@@ -5,11 +5,12 @@ import com.ebay.shippingserviceexample.dtos.responses.ItemEligibilityWrapper;
 import com.ebay.shippingserviceexample.services.ItemEligibilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/shipping-eligibility")
 public class ShippingEligibilityController {
 
@@ -21,8 +22,8 @@ public class ShippingEligibilityController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemEligibilityWrapper> checkItemEligibility(ItemUpForEligibility item) {
-        itemEligibilityService.checkItemEligibility(item);
-        return ResponseEntity.ok(new ItemEligibilityWrapper(true, item));
+    public ResponseEntity<ItemEligibilityWrapper> checkItemEligibility(@RequestBody ItemUpForEligibility item) {
+        boolean isEligible = itemEligibilityService.checkItemEligibility(item);
+        return ResponseEntity.ok(new ItemEligibilityWrapper(isEligible, item));
     }
 }

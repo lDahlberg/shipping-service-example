@@ -37,7 +37,7 @@ class ItemCategoryServiceTest {
 
     @Test
     void isEligibleReturnsTrueWhenItemCategoryIsInSet() {
-        when(categoryRepository.get()).thenReturn(categories);
+//        when(categoryRepository.get()).thenReturn(categories);
 
         String TITLE = "Hitchhiker's Guide to the Galaxy";
         String SELLER_NAME = "Ebay";

@@ -1,4 +1,4 @@
-package daos;
+package com.ebay.shippingserviceexample.daos;
 
 import java.util.Set;
 
