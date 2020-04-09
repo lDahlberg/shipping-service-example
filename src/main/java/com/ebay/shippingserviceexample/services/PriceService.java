@@ -19,6 +19,7 @@ public class PriceService implements EligibleProductService {
 
     @Override
     public boolean isEligible(ItemUpForEligibility itemUpForEligibility) {
+        // This should be cached and only changed during admin updates
         Price price = priceRepository.findCurrentPrice();
 
         if(price == null) {

@@ -22,6 +22,7 @@ public class ItemCategoryService implements EligibleProductService {
 
     @Override
     public boolean isEligible(ItemUpForEligibility itemUpForEligibility) {
+        // This should ideally be cached and only be changed during admin updates in the future
         Category category = categoryRepository.findCurrentCategories();
         Set<Integer> itemCategories = new HashSet<>(category.getValues());
         return itemCategories.contains(itemUpForEligibility.getCategory());
