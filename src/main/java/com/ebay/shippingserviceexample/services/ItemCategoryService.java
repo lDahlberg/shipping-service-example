@@ -1,6 +1,7 @@
 package com.ebay.shippingserviceexample.services;
 
 import com.ebay.shippingserviceexample.EligibleProductService;
+import com.ebay.shippingserviceexample.daos.Category;
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 import com.ebay.shippingserviceexample.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,8 @@ public class ItemCategoryService implements EligibleProductService {
 
     @Override
     public boolean isEligible(ItemUpForEligibility itemUpForEligibility) {
-        Set<Integer> itemCategories = new HashSet<>();
-        itemCategories.add(6);
-        itemCategories.add(9);
-        itemCategories.add(42);
+        Category category = categoryRepository.findCurrentCategories();
+        Set<Integer> itemCategories = new HashSet<>(category.getValues());
         return itemCategories.contains(itemUpForEligibility.getCategory());
     }
 }

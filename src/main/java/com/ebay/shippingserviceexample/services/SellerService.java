@@ -18,8 +18,11 @@ public class SellerService implements EligibleProductService {
 
     @Override
     public boolean isEligible(ItemUpForEligibility itemUpForEligibility) {
-        Seller seller = sellerRepository.findById(itemUpForEligibility.getSeller()).orElse(Seller.NULL);
+        Seller seller = sellerRepository.findSellerByName(itemUpForEligibility.getSeller());
 
+        if(seller ==  null) {
+            return false;
+        }
         return seller.isSellerEnrolled();
     }
 }

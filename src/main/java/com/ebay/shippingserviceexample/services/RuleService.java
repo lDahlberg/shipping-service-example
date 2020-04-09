@@ -12,14 +12,11 @@ import java.util.List;
 @Component
 public class RuleService {
 
-    private SellerService sellerService;
-    private ItemCategoryService itemCategoryService;
-
     public final List<EligibleProductService> defaultProducts;
 
     @Autowired
-    public RuleService(SellerService sellerService, ItemCategoryService itemCategoryService) {
-        this.defaultProducts = Arrays.asList(sellerService, itemCategoryService);
+    public RuleService(SellerService sellerService, ItemCategoryService itemCategoryService, PriceService priceService) {
+        this.defaultProducts = Arrays.asList(sellerService, itemCategoryService, priceService);
     }
 
     public List<EligibleProductService> getDefaultProducts() {

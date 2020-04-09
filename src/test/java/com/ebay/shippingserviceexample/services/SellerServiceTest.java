@@ -29,9 +29,9 @@ class SellerServiceTest {
 
     @Test
     void isEligibleReturnsTrueWhenSellerIsInProgram() {
-        Seller seller = new Seller(true);
+        Seller seller = new Seller(true, "John");
 
-        when(repository.findById(SELLER_NAME)).thenReturn(Optional.of(seller));
+        when(repository.findSellerByName(SELLER_NAME)).thenReturn(seller);
 
         ItemUpForEligibility item = new ItemUpForEligibility(TITLE, SELLER_NAME,  CATEGORY, PRICE);
         boolean result = subject.isEligible(item);
@@ -41,7 +41,7 @@ class SellerServiceTest {
 
     @Test
     void isEligibleReturnsFaleWhenSellerIsNull() {
-        when(repository.findById(SELLER_NAME)).thenReturn(Optional.empty());
+        when(repository.findSellerByName(SELLER_NAME)).thenReturn(null);
 
         ItemUpForEligibility item = new ItemUpForEligibility(TITLE, SELLER_NAME,  CATEGORY, PRICE);
         boolean result = subject.isEligible(item);

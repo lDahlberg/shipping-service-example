@@ -1,5 +1,6 @@
 package com.ebay.shippingserviceexample.services;
 
+import com.ebay.shippingserviceexample.daos.Category;
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 import com.ebay.shippingserviceexample.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,15 +10,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import static javax.swing.text.html.HTML.Attribute.TITLE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ItemCategoryServiceTest {
+class CategoryServiceTest {
 
     @InjectMocks
     private ItemCategoryService subject;
@@ -25,11 +25,11 @@ class ItemCategoryServiceTest {
     @Mock
     private CategoryRepository categoryRepository;
 
-    private Set<Integer> categories;
+    private List<Integer> categories;
 
     @BeforeEach
     public void setup() {
-        categories = new HashSet<>();
+        categories = new ArrayList<>();
         categories.add(6);
         categories.add(9);
         categories.add(42);
@@ -37,7 +37,7 @@ class ItemCategoryServiceTest {
 
     @Test
     void isEligibleReturnsTrueWhenItemCategoryIsInSet() {
-//        when(categoryRepository.get()).thenReturn(categories);
+        when(categoryRepository.findCurrentCategories()).thenReturn(new Category(categories, true));
 
         String TITLE = "Hitchhiker's Guide to the Galaxy";
         String SELLER_NAME = "Ebay";
