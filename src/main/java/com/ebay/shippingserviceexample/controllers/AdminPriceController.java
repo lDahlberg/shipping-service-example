@@ -21,9 +21,12 @@ public class AdminPriceController {
 
     @PutMapping
     public ResponseEntity<Price> updatePrice(@RequestBody UpdatedPrice updatedPrice) {
-        // Verify admin privileges
-        adminPriceService.updatePrice(updatedPrice);
+        // Admin verification privileges would go here
+        if(updatedPrice.getValue() < 0.0 ) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        Price price = adminPriceService.updatePrice(updatedPrice);
 
-        return ResponseEntity.ok(new Price(0.00, true));
+        return ResponseEntity.ok(price);
     }
 }

@@ -8,7 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,7 +24,7 @@ class AdminPriceControllerTest {
     private AdminPriceService adminPriceService;
 
     @Test
-    void updatePriceShouldCallAdminPriceService() {
+    public void updatePriceShouldCallAdminPriceService() {
         double value = 10.99;
         UpdatedPrice updatedPrice = new UpdatedPrice(value);
         Price price = new Price(10, true);
@@ -31,5 +34,23 @@ class AdminPriceControllerTest {
 
         int expectedInvocations = 1;
         verify(adminPriceService, times(expectedInvocations)).updatePrice(updatedPrice);
+    }
+
+    @Test
+    public void updatePriceShouldReturnBadRequestWhenNoValueExists() {
+        UpdatedPrice updatedPrice = new UpdatedPrice(-1.00);
+
+        ResponseEntity<Price> result = subject.updatePrice(updatedPrice);
+
+        assertEquals(result.getStatusCode(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void updatePriceShouldReturnUnauthorizedWhenNotAdmin() {
+        UpdatedPrice updatedPrice = new UpdatedPrice(-1.00);
+
+        ResponseEntity<Price> result = subject.updatePrice(updatedPrice);
+
+        assertEquals(result.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 }

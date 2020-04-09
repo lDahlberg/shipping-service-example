@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 @RestController
 @RequestMapping("/admin/category")
 public class AdminCategoryController {
@@ -22,9 +20,11 @@ public class AdminCategoryController {
 
     @PutMapping
     public ResponseEntity<Category> updateCategory(@RequestBody UpdatedCategory updatedCategory) {
-        // Verify admin privileges
-
-        adminCategoryService.updateCategory(updatedCategory);
-        return ResponseEntity.ok(new Category(Arrays.asList(1,2), true));
+        // Admin verification privileges would go here
+        if(updatedCategory.getValues() == null || updatedCategory.getValues().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        Category category = adminCategoryService.updateCategory(updatedCategory);
+        return ResponseEntity.ok(category);
     }
 }

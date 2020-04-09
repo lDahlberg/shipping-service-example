@@ -23,6 +23,15 @@ public class ShippingEligibilityController {
 
     @PostMapping
     public ResponseEntity<ItemEligibilityWrapper> checkItemEligibility(@RequestBody ItemUpForEligibility item) {
+        if(item.getSeller() == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        if(item.getCategory() < 0) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        if(item.getPrice() < 0.0) {
+            return ResponseEntity.badRequest().body(null);
+        }
         boolean isEligible = itemEligibilityService.checkItemEligibility(item);
         return ResponseEntity.ok(new ItemEligibilityWrapper(isEligible, item));
     }
