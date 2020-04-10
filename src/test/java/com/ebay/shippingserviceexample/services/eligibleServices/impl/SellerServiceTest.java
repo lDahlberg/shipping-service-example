@@ -1,15 +1,14 @@
-package com.ebay.shippingserviceexample.services;
+package com.ebay.shippingserviceexample.services.eligibleServices.impl;
 
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 import com.ebay.shippingserviceexample.repository.SellerRepository;
 import com.ebay.shippingserviceexample.daos.Seller;
+import com.ebay.shippingserviceexample.services.eligibleServices.impl.SellerService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

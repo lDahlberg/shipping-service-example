@@ -1,4 +1,4 @@
-package com.ebay.shippingserviceexample;
+package com.ebay.shippingserviceexample.services.eligibleServices;
 
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 

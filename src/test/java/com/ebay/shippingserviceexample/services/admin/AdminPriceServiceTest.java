@@ -22,6 +22,18 @@ class AdminPriceServiceTest {
     private PriceRepository priceRepository;
 
     @Test
+    void updatePriceShouldNotUpdateCurrentPriceIfItDoesNotExist() {
+        double value = 10.99;
+        UpdatedPrice updatedPrice = new UpdatedPrice(value);
+        when(priceRepository.findCurrentPrice()).thenReturn(null);
+
+        subject.updatePrice(updatedPrice);
+
+        int expectedInvocations = 0;
+        verify(priceRepository, times(expectedInvocations)).save(any(Price.class));
+    }
+
+    @Test
     void updatePriceShouldCallRepository() {
         double value = 10.99;
         UpdatedPrice updatedPrice = new UpdatedPrice(value);

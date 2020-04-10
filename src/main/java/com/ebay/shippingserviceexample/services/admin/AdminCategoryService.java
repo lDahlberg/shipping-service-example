@@ -20,13 +20,16 @@ public class AdminCategoryService {
     }
 
     public Category updateCategory(UpdatedCategory updatedCategory) {
-        Category currentCategory = categoryRepository.findCurrentCategories();
-        List<Integer> currentValues = currentCategory.getValues();
-        currentCategory.setCurrent(false);
-
-        categoryRepository.save(currentCategory);
         List<Integer> updatedValues = new ArrayList<>();
-        updatedValues.addAll(currentValues);
+
+        Category currentCategory = categoryRepository.findCurrentCategories();
+        if(currentCategory != null) {
+            List<Integer> currentValues = currentCategory.getValues();
+            currentCategory.setCurrent(false);
+            updatedValues.addAll(currentValues);
+            categoryRepository.save(currentCategory);
+        }
+
         updatedValues.addAll(updatedCategory.getValues());
 
         Category category = new Category(updatedValues, true);

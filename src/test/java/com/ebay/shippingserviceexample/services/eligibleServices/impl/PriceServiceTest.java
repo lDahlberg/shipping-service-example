@@ -1,13 +1,16 @@
-package com.ebay.shippingserviceexample.services;
+package com.ebay.shippingserviceexample.services.eligibleServices.impl;
 
 import com.ebay.shippingserviceexample.daos.Price;
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 import com.ebay.shippingserviceexample.repository.PriceRepository;
+import com.ebay.shippingserviceexample.services.eligibleServices.impl.PriceService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -19,6 +22,11 @@ class PriceServiceTest {
 
     @Mock
     private PriceRepository priceRepository;
+
+    @BeforeEach
+    public void setup() {
+        ReflectionTestUtils.setField(subject, "defaultPrice", 10.00);
+    }
 
     @Test
     void isEligibleReturnsTrueForGreaterPricedItem() {
@@ -35,7 +43,7 @@ class PriceServiceTest {
     }
 
     @Test
-    void isEligibleReturnsFalseForNoPrice() {
+    void isEligibleUsesDefaultForNoPrice() {
         when(priceRepository.findCurrentPrice()).thenReturn(null);
         String title = "Hitchhiker's Guide to the Galaxy";
         String sellerName = "Ebay";
@@ -44,6 +52,6 @@ class PriceServiceTest {
         ItemUpForEligibility item = new ItemUpForEligibility(title, sellerName, category, price);
         boolean result = subject.isEligible(item);
 
-        assertFalse(result, "Should return false for no price set");
+        assertTrue(result, "Should return true for no price set as price is greater than default");
     }
 }

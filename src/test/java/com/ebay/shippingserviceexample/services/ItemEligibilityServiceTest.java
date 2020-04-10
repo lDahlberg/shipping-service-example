@@ -1,7 +1,10 @@
 package com.ebay.shippingserviceexample.services;
 
-import com.ebay.shippingserviceexample.EligibleProductService;
+import com.ebay.shippingserviceexample.services.eligibleServices.EligibleProductService;
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
+import com.ebay.shippingserviceexample.factory.RuleFactory;
+import com.ebay.shippingserviceexample.services.eligibleServices.impl.ItemCategoryService;
+import com.ebay.shippingserviceexample.services.eligibleServices.impl.SellerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +26,7 @@ class ItemEligibilityServiceTest {
     private ItemEligibilityService subject;
 
     @Mock
-    private RuleService ruleService;
+    private RuleFactory ruleFactory;
 
     @Mock
     private SellerService sellerService;
@@ -49,7 +52,7 @@ class ItemEligibilityServiceTest {
     public void checkItemEligibilityRunsThroughServicesWhichReturnTrueAndReturnsTrue() {
         ItemUpForEligibility item = new ItemUpForEligibility(TITLE, SELLER_NAME,  CATEGORY, PRICE);
 
-        when(ruleService.getDefaultProducts()).thenReturn(DEFAULT_PRODUCTS);
+        when(ruleFactory.getDefaultProducts()).thenReturn(DEFAULT_PRODUCTS);
         when(sellerService.isEligible(item)).thenReturn(true);
         when(itemCategoryService.isEligible(item)).thenReturn(true);
 
@@ -62,7 +65,7 @@ class ItemEligibilityServiceTest {
     public void runsThroughServicesAndChecksForEligibility() {
         ItemUpForEligibility item = new ItemUpForEligibility(TITLE, SELLER_NAME,  CATEGORY, PRICE);
 
-        when(ruleService.getDefaultProducts()).thenReturn(DEFAULT_PRODUCTS);
+        when(ruleFactory.getDefaultProducts()).thenReturn(DEFAULT_PRODUCTS);
         when(sellerService.isEligible(item)).thenReturn(true);
         when(itemCategoryService.isEligible(item)).thenReturn(false);
 

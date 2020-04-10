@@ -1,9 +1,9 @@
-package com.ebay.shippingserviceexample.services;
+package com.ebay.shippingserviceexample.services.eligibleServices.impl;
 
-import com.ebay.shippingserviceexample.EligibleProductService;
 import com.ebay.shippingserviceexample.dtos.requests.ItemUpForEligibility;
 import com.ebay.shippingserviceexample.repository.SellerRepository;
 import com.ebay.shippingserviceexample.daos.Seller;
+import com.ebay.shippingserviceexample.services.eligibleServices.EligibleProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

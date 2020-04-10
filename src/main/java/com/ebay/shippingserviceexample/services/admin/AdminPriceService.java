@@ -17,13 +17,12 @@ public class AdminPriceService {
 
     public Price updatePrice(UpdatedPrice updatedPrice) {
         Price price = priceRepository.findCurrentPrice();
-        price.setCurrent(false);
-        priceRepository.save(price);
-
+        if(price != null) {
+            price.setCurrent(false);
+            priceRepository.save(price);
+        }
         Price newPrice = new Price(updatedPrice.getValue(), true);
         priceRepository.insert(newPrice);
-        System.out.println(updatedPrice);
-        System.out.println(newPrice);
         return newPrice;
     }
 }

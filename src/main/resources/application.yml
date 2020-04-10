@@ -3,3 +3,7 @@ spring:
     mongodb:
      host: localhost
      port: 27017
+
+default:
+  priceValue: 9.99
+  categoryValues: 1, 4, 9

@@ -26,6 +26,22 @@ class AdminCategoryServiceTest {
     private CategoryRepository categoryRepository;
 
     @Test
+    void updateCategoryShouldSaveWithUpdatedValuesWhenNoCurrentCategoryExists() {
+        List<Integer> updatedValues = Arrays.asList(9, 16);
+        when(categoryRepository.findCurrentCategories()).thenReturn(null);
+
+        UpdatedCategory updatedCategory = new UpdatedCategory(updatedValues);
+        subject.updateCategory(updatedCategory);
+
+        List<Integer> newValues = new ArrayList<>(updatedValues);
+        Category category = new Category(newValues, true);
+        int expectedInsertInvocations = 1;
+        verify(categoryRepository, times(expectedInsertInvocations)).insert(category);
+        int expectedSaveInvocations = 0;
+        verify(categoryRepository, times(expectedSaveInvocations)).save(any(Category.class));
+    }
+
+    @Test
     void updateCategoryShouldSaveWithUpdatedValues() {
         List<Integer> updatedValues = Arrays.asList(9, 16);
         List<Integer> currentValues = Arrays.asList(1, 4);
